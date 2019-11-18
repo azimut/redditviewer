@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/url"
 	"redditviewer/format"
+	"redditviewer/human"
 )
 
 // TODO: polymorfism? for hostname
@@ -35,12 +36,13 @@ func Parents(r string) {
 
 func Format_Post(r gjson.Result) {
 	depth := int(r.Get("depth").Int())
+	unix_human := human.Unix_Time(r.Get("created_utc").Int())
 	resp, _ :=
 		format.Format_Line(
-			fmt.Sprintf("%s %s %s\n",
+			fmt.Sprintf("%s - %s - %s\n",
 				r.Get("score").String(),
-				r.Get("author").String(),
-				r.Get("created_utc").String()),
+				unix_human,
+				r.Get("author").String()),
 			depth)
 	fmt.Println(resp)
 	resp, _ =
