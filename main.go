@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	//	"github.com/rivo/tview"
 	"github.com/tidwall/gjson"
 	"io/ioutil"
 	"net/url"
+	"redditviewer/format"
 )
 
 // TODO: polymorfism? for hostname
@@ -32,18 +32,31 @@ func Comments(n_comments int64) string {
 	}
 }
 
-func childrens(r gjson.Result) {
-	body := r.Get("body").String()
-	fmt.Println("acomment:", body)
+func Childrens(r gjson.Result) {
+	Format_Post(r)
 	for _, v := range r.Get("replies.data.children.#.data").Array() {
-		childrens(v)
+		Childrens(v)
+	}
+}
+func Parents(r string) {
+	for _, c := range gjson.Get(r, "1.data.children.#.data").Array() {
+		Childrens(c)
 	}
 }
 
-func cm(r string) {
-	for _, c := range gjson.Get(r, "1.data.children.#.data").Array() {
-		childrens(c)
-	}
+func Format_Post(r gjson.Result) {
+	depth := int(r.Get("depth").Int())
+	resp, _ :=
+		format.Format_Line(
+			fmt.Sprintf("%s %s %s",
+				r.Get("score").String(),
+				r.Get("author").String(),
+				r.Get("created_utc").String()),
+			depth)
+	fmt.Println(resp)
+	resp, _ = format.Format_Line(r.Get("body").String(), depth)
+	fmt.Println(resp)
+	fmt.Println()
 }
 
 func main() {
@@ -51,48 +64,19 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	///gjson.Valid()
-	fmt.Println(string(dat)[0:20])
+
 	post := gjson.Get(string(dat), "0.data.children.0.data")
-	fmt.Println("title:", post.Get("title"))
-	fmt.Println("url:", post.Get("url"))
-	fmt.Println("permalink:", post.Get("permalink"))
-	fmt.Println("selftext:", post.Get("selftext"))
-	fmt.Println("ups:", post.Get("ups"))
-	fmt.Println("author:", post.Get("author"))
+	//fmt.Println("title:", post.Get("title"))
+	// fmt.Println("url:", post.Get("url"))
+	// fmt.Println("permalink:", post.Get("permalink"))
+	// fmt.Println("selftext:", post.Get("selftext"))
+	// fmt.Println("ups:", post.Get("ups"))
+	// fmt.Println("author:", post.Get("author"))
 	n_comments := post.Get("num_comments").Int()
 	fmt.Println(Comments(n_comments))
-	cm(string(dat))
+	if n_comments > 0 {
+		Parents(string(dat))
+	}
 	// comments := gjson.Get(string(dat), "1.data.children").Array()
 	// fmt.Println(comments[0])
-	//
-	// rootDir := "."
-	// root := tview.
-	// 	NewTreeNode(rootDir)
-	// tree := tview.
-	// 	NewTreeView().
-	// 	SetRoot(root).
-	// 	SetCurrentNode(root)
-
-	// // A helper function which adds the files and directories of the given path
-	// // to the given target node.
-	// add := func(target *tview.TreeNode, path string) {
-	// 	files, err := ioutil.ReadDir(path)
-	// 	if err != nil {
-	// 		panic(err)
-	// 	}
-	// 	for _, file := range files {
-	// 		node := tview.NewTreeNode(file.Name()).
-	// 			SetReference(filepath.Join(path, file.Name())).
-	// 			SetSelectable(file.IsDir())
-	// 		target.AddChild(node)
-	// 	}
-	// }
-
-	// // Add the current directory to the root node.
-	// add(root, rootDir)
-	// //
-	// if err := tview.NewApplication().SetRoot(tree, true).Run(); err != nil {
-	// 	panic(err)
-	// }
 }
