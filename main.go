@@ -21,17 +21,6 @@ func ruler() {
 	fmt.Println("path:", u.Path)
 }
 
-func Comments(n_comments int64) string {
-	switch n_comments {
-	case 0:
-		return "No comments"
-	case 1:
-		return fmt.Sprintf("%d comment\n", n_comments)
-	default:
-		return fmt.Sprintf("%d comments\n", n_comments)
-	}
-}
-
 func Childrens(r gjson.Result) {
 	Format_Post(r)
 	for _, v := range r.Get("replies.data.children.#.data").Array() {
@@ -48,13 +37,16 @@ func Format_Post(r gjson.Result) {
 	depth := int(r.Get("depth").Int())
 	resp, _ :=
 		format.Format_Line(
-			fmt.Sprintf("%s %s %s",
+			fmt.Sprintf("%s %s %s\n",
 				r.Get("score").String(),
 				r.Get("author").String(),
 				r.Get("created_utc").String()),
 			depth)
 	fmt.Println(resp)
-	resp, _ = format.Format_Line(r.Get("body").String(), depth)
+	resp, _ =
+		format.Format_Line(
+			r.Get("body").String(),
+			depth)
 	fmt.Println(resp)
 	fmt.Println()
 }
@@ -66,14 +58,15 @@ func main() {
 	}
 
 	post := gjson.Get(string(dat), "0.data.children.0.data")
-	//fmt.Println("title:", post.Get("title"))
-	// fmt.Println("url:", post.Get("url"))
-	// fmt.Println("permalink:", post.Get("permalink"))
-	// fmt.Println("selftext:", post.Get("selftext"))
-	// fmt.Println("ups:", post.Get("ups"))
-	// fmt.Println("author:", post.Get("author"))
 	n_comments := post.Get("num_comments").Int()
-	fmt.Println(Comments(n_comments))
+	fmt.Println("title:", post.Get("title"))
+	fmt.Println("url:", post.Get("url"))
+	fmt.Println("selftext:", post.Get("selftext"))
+	fmt.Printf("%d - %s - %d Comment(s)\n",
+		post.Get("ups").Int(),
+		post.Get("author"),
+		n_comments)
+	fmt.Println()
 	if n_comments > 0 {
 		Parents(string(dat))
 	}

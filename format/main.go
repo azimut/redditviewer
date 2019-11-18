@@ -15,13 +15,10 @@ func Limit_Line(post string, depth int) (string, error) {
 }
 
 func Indent_Line(post string, depth int) string {
-	if depth == 0 {
-		return post
-	}
 	var post_indented []string
-	indent := strings.Repeat(" ", depth*4)
+	indent := strings.Repeat(" ", depth*3)
 	for _, s := range strings.Split(post, "\n") {
-		post_indented = append(post_indented, indent+s)
+		post_indented = append(post_indented, indent+"｜"+s)
 	}
 	return strings.Join(post_indented, "\n")
 }
@@ -31,5 +28,6 @@ func Format_Line(post string, depth int) (string, error) {
 	if err != nil {
 		return "", (err)
 	}
+	splitted = strings.TrimSpace(splitted)
 	return Indent_Line(splitted, depth), nil
 }
