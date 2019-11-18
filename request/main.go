@@ -32,13 +32,13 @@ func GetFromParam() (string, error) {
 		return "", fmt.Errorf("not supported host")
 	}
 	s = s + ".json"
-	//
+	// Request
 	req, err := http.NewRequest(http.MethodGet, s, nil)
 	if err != nil {
 		return "", err
 	}
-	req.Header.Set("User-Agent", "reddit-api")
-	//
+	req.Header.Set("User-Agent", "Reddit_Cli/0.1")
+	// Response
 	resp, err := client.Do(req)
 	if err != nil {
 		return "", err
