@@ -1,7 +1,10 @@
 * cliview
-A cli view of some sites. Used mainly with newsboat.
-** Reddit
+
+A simple cli view of some sites. Used mainly with newsboat.
+
+** (to be) Supported sites
+*** Reddit
    New ui is awful, mainly due not being able to see all comments on a single page, one needs to be constantly clicking to get more comments.
    Old reddit has that but unlike new reddit, that looks ok-ish, it looks awful on cli browser like w3m.
-** -chan
+*** vi-chan
    Boards are fine but there is not native threaded view of posts so dialogue is confusing. Also it would be nice to highlight new posts since last seen.
