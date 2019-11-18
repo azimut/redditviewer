@@ -2,6 +2,43 @@
 
 A simple cli view of some sites. Used mainly with newsboat.
 
+```
+./redditviewer https://www.reddit.com/r/Common_Lisp/comments/dxntzm/alexgutevgenericcl_v05_generic_function_wrapper/
+title: alex-gutev/generic-cl · v0.5 · generic function wrapper over various functions in the Common Lisp standard, such as equality predicates and sequence operations.
+url: https://github.com/alex-gutev/generic-cl/releases/tag/v0.5
+(15)dzecniv - 7 Comment(s)
+
+｜For sequence operations there's the [extensible
+｜sequences](https://shinmera.github.io/trivial-extensible-sequences) protocol. It's
+｜currently supported by SBCL and ABCL. Get your implementation of choice to support
+｜it, too!
+｜Shinmera(2) - 4 hours ago
+
+｜The package should have nicknames `SLOW-COMMON-LISP` and `SLOW-CL`.
+｜stylewarning(2) - 23 hours ago
+
+   ｜That was also my initial reaction, but then I remembered that the author also
+   ｜tries to make  dispatch faster: [https://github.com/alex-gutev/static
+   ｜dispatch](https://github.com/alex-gutev/static-dispatch)
+   ｜
+   ｜He mentions that on the bottom of the generic-cl github page.
+   ｜
+   ｜The interesting question is, what it means in real life for actual software:
+   ｜performance, robustness, ...
+   ｜
+   ｜So, I think the author is not naive about this and it's an interesting
+   ｜experiment. Languages which tried to make multiple dispatch faster were/are:
+   ｜commercial CL vendors, Dylan, earlier CLOS related research and lately the Julia
+   ｜language implementation.
+   ｜lispm(5) - 22 hours ago
+
+      ｜I don’t think there was any naivety on the author’s part. I haven’t
+      ｜been able to use things like inlined-generic-functions successfully in Real
+      ｜Code (TM).
+      ｜stylewarning(3) - 20 hours ago
+
+```
+
 ** (to be) Supported sites
 *** Reddit
    New ui is awful, mainly due not being able to see all comments on a single page, one needs to be constantly clicking to get more comments.
