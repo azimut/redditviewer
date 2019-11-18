@@ -1,4 +1,4 @@
-* cliview
+* redditviewer
 
 A simple cli view of some sites. Used mainly with newsboat.
 
