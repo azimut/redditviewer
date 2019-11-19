@@ -1,11 +1,10 @@
 package main
 
 import (
-	//	"fmt"
-	"github.com/tidwall/gjson"
-	//"io/ioutil"
 	"redditviewer/printer"
 	"redditviewer/request"
+
+	"github.com/tidwall/gjson"
 )
 
 // TODO: polymorfism? for hostname

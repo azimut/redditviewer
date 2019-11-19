@@ -2,10 +2,11 @@ package printer
 
 import (
 	"fmt"
-	"github.com/tidwall/gjson"
 	"redditviewer/format"
 	"redditviewer/human"
 	"strings"
+
+	"github.com/tidwall/gjson"
 )
 
 func Childrens(r gjson.Result) {
@@ -46,7 +47,7 @@ func Print_Header(r gjson.Result) {
 	fmt.Println("title:", r.Get("title"))
 	fmt.Println("url:", r.Get("url"))
 	if len(strings.TrimSpace(selftext)) != 0 {
-		fmt.Printf("selftext:\n%s\n", selftext)
+		fmt.Printf("\n%s\n", selftext)
 	}
 	fmt.Printf("(%d)%s - %s - %d Comment(s)\n",
 		r.Get("ups").Int(),
