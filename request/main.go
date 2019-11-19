@@ -9,17 +9,6 @@ import (
 	"time"
 )
 
-func ruler() (string, error) {
-	s := "https://www.reddit.com/r/politics/comments/9wqvmc/federal_judge_finds_georgia_county_violated_civil/.json"
-	u, err := url.Parse(s)
-	if err != nil {
-		return "", err
-	}
-	fmt.Println("host:", u.Host)
-	fmt.Println("path:", u.Path)
-	return s, nil
-}
-
 func GetFromParam() (string, error) {
 	client := &http.Client{
 		Timeout: 2 * time.Second}
