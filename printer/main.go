@@ -42,14 +42,16 @@ func Print_Post(r gjson.Result) {
 
 func Print_Header(r gjson.Result) {
 	selftext := r.Get("selftext").String()
+	unix_human := human.Unix_Time(r.Get("created_utc").Int())
 	fmt.Println("title:", r.Get("title"))
 	fmt.Println("url:", r.Get("url"))
 	if len(strings.TrimSpace(selftext)) != 0 {
-		fmt.Println("selftext:", selftext)
+		fmt.Printf("selftext:\n%s\n", selftext)
 	}
-	fmt.Printf("(%d)%s - %d Comment(s)\n",
+	fmt.Printf("(%d)%s - %s - %d Comment(s)\n",
 		r.Get("ups").Int(),
 		r.Get("author"),
+		unix_human,
 		r.Get("num_comments").Int())
 	fmt.Println()
 }
