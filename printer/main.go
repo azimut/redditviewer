@@ -25,24 +25,25 @@ func Print_Post(r gjson.Result) {
 	depth := int(r.Get("depth").Int())
 	unix_human := human.Unix_Time(r.Get("created_utc").Int())
 	resp, _ :=
-		format.Format_Line(
+		format.Format_Post(
 			r.Get("body").String(),
 			depth)
 	fmt.Println(resp)
 	resp, _ =
-		format.Format_Line(
+		format.Format_Post(
 			fmt.Sprintf("%s(%s) - %s\n",
 				r.Get("author").String(),
 				r.Get("score").String(),
 				unix_human),
 			depth)
 	fmt.Println(resp)
-
 	fmt.Println()
 }
 
 func Print_Header(r gjson.Result) {
-	selftext, _ := format.Limit_Line(r.Get("selftext").String(), 0)
+	fmt.Println()
+	// TODO: check error
+	selftext, _ := format.Wrap_Line(r.Get("selftext").String(), 0)
 	unix_human := human.Unix_Time(r.Get("created_utc").Int())
 	fmt.Println("title:", r.Get("title"))
 	fmt.Println("url:", r.Get("url"))
