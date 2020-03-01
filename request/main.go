@@ -11,7 +11,7 @@ import (
 
 func GetFromParam() (string, error) {
 	client := &http.Client{
-		Timeout: 2 * time.Second}
+		Timeout: 5 * time.Second}
 	s := os.Args[1]
 	u, err := url.Parse(s)
 	if err != nil {
