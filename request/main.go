@@ -9,9 +9,9 @@ import (
 	"time"
 )
 
-func GetFromParam() (string, error) {
+func GetFromParam(timeout int) (string, error) {
 	client := &http.Client{
-		Timeout: 5 * time.Second}
+		Timeout: time.Duration(timeout) * time.Second}
 	s := os.Args[1]
 	u, err := url.Parse(s)
 	if err != nil {

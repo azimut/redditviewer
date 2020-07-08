@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"redditviewer/printer"
 	"redditviewer/request"
 
@@ -13,7 +14,10 @@ import (
 
 func main() {
 	//dat, err := ioutil.ReadFile("/home/sendai/.json.2")
-	dat, err := request.GetFromParam()
+	var timeout int
+	flag.IntVar(&timeout, "t", 5, "timeout after seconds")
+	flag.Parse()
+	dat, err := request.GetFromParam(timeout)
 	if err != nil {
 		panic(err)
 	}
