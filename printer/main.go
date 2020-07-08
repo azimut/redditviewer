@@ -2,9 +2,10 @@ package printer
 
 import (
 	"fmt"
-	"redditviewer/format"
-	"redditviewer/human"
 	"strings"
+
+	"github.com/azimut/redditviewer/format"
+	"github.com/azimut/redditviewer/human"
 
 	"github.com/tidwall/gjson"
 )

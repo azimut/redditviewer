@@ -2,8 +2,9 @@ package main
 
 import (
 	"flag"
-	"redditviewer/printer"
-	"redditviewer/request"
+
+	"github.com/azimut/redditviewer/printer"
+	"github.com/azimut/redditviewer/request"
 
 	"github.com/tidwall/gjson"
 )
