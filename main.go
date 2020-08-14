@@ -22,12 +22,11 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	s := string(dat)
-	post := gjson.Get(s, "0.data.children.0.data")
-	comments := gjson.Get(s, "1.data.children.#.data")
-	num_comments := post.Get("num_comments").Int()
+	post := gjson.Get(dat, "0.data.children.0.data")
 	printer.Print_Header(post)
+	num_comments := post.Get("num_comments").Int()
 	if num_comments > 0 {
+		comments := gjson.Get(dat, "1.data.children.#.data")
 		printer.Print_Posts(comments)
 	}
 }
