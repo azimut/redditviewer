@@ -40,10 +40,8 @@ func GetFromParam(timeout int) (string, error) {
 		fmt.Println(string(r))
 		return "", fmt.Errorf("invalid http status code %d", resp.StatusCode)
 	}
-	bodyBytes, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return "", err
+	if b, err := ioutil.ReadAll(resp.Body); err == nil {
+		return string(b), nil
 	}
-	bodyString := string(bodyBytes)
-	return bodyString, nil
+	return "", fmt.Errorf("no body read")
 }

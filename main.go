@@ -25,9 +25,9 @@ func main() {
 	s := string(dat)
 	post := gjson.Get(s, "0.data.children.0.data")
 	comments := gjson.Get(s, "1.data.children.#.data")
-	n_comments := post.Get("num_comments").Int()
+	num_comments := post.Get("num_comments").Int()
 	printer.Print_Header(post)
-	if n_comments > 0 {
+	if num_comments > 0 {
 		printer.Print_Posts(comments)
 	}
 }
