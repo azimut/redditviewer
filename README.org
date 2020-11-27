@@ -3,7 +3,7 @@
 A simple cli view of some sites. Used mainly with newsboat.
 
 #+begin_src
-$ ./redditviewer https://www.reddit.com/r/Common_Lisp/comments/dxntzm/alexgutevgenericcl_v05_generic_function_wrapper/
+$ redditviewer -u https://www.reddit.com/r/Common_Lisp/comments/dxntzm/alexgutevgenericcl_v05_generic_function_wrapper/
 title: alex-gutev/generic-cl · v0.5 · generic function wrapper over various functions in the Common Lisp standard, such as equality predicates and sequence operations.
 url: https://github.com/alex-gutev/generic-cl/releases/tag/v0.5
 (15)dzecniv - 7 Comment(s)
