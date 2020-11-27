@@ -9,12 +9,18 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-func main() {
-	var timeout int
+var timeout int
+var uri string
+
+func init() {
 	flag.IntVar(&timeout, "t", 5, "timeout after seconds")
+	flag.StringVar(&uri, "u", "", "url")
+}
+
+func main() {
 	flag.Parse()
 
-	data, err := request.GetFromParam(timeout)
+	data, err := request.GetFromParam(timeout, uri)
 	if err != nil {
 		panic(err)
 	}

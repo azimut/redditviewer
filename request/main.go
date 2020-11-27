@@ -5,24 +5,27 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
-	"os"
 	"time"
 )
 
-func GetFromParam(timeout int) (string, error) {
+func GetFromParam(timeout int, uri string) (string, error) {
 	client := &http.Client{
 		Timeout: time.Duration(timeout) * time.Second}
-	s := os.Args[1]
-	u, err := url.Parse(s)
+
+	if uri == "" {
+		return "", fmt.Errorf("-u parameter not provided")
+	}
+
+	u, err := url.Parse(uri)
 	if err != nil {
 		return "", err
 	}
 	if u.Host != "www.reddit.com" {
 		return "", fmt.Errorf("not supported host")
 	}
-	s = s + ".json"
+	uri = uri + ".json"
 	// Request
-	req, err := http.NewRequest(http.MethodGet, s, nil)
+	req, err := http.NewRequest(http.MethodGet, uri, nil)
 	if err != nil {
 		return "", err
 	}
@@ -36,7 +39,7 @@ func GetFromParam(timeout int) (string, error) {
 	//
 	if resp.StatusCode != http.StatusOK {
 		r, _ := ioutil.ReadAll(resp.Body)
-		fmt.Println(s)
+		fmt.Println(uri)
 		fmt.Println(string(r))
 		return "", fmt.Errorf("invalid http status code %d", resp.StatusCode)
 	}
