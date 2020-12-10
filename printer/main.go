@@ -12,30 +12,37 @@ import (
 	"github.com/tidwall/gjson"
 )
 
-func Print_Posts(r gjson.Result, op string) {
+func Print_Posts(r gjson.Result, op string, width int) {
 	for _, c := range r.Array() {
-		childrens(c, op)
+		childrens(c, op, width)
 	}
 }
 
-func childrens(r gjson.Result, op string) {
-	print_post(r, op)
+func childrens(r gjson.Result, op string, width int) {
+	print_post(r, op, width)
 	for _, v := range r.Get("replies.data.children.#.data").Array() {
-		childrens(v, op)
+		childrens(v, op, width)
 	}
 }
 
-func max(x, y int) int {
+func Min(x, y int) int {
+	if x > y {
+		return y
+	}
+	return x
+}
+
+func Max(x, y int) int {
 	if x > y {
 		return x
 	}
 	return y
 }
 
-func print_post(r gjson.Result, op string) {
+func print_post(r gjson.Result, op string, width int) {
 	// Comment
 	depth := int(r.Get("depth").Int())
-	comment := markdown.Render(r.Get("body").String(), 80, max(3*depth, 1))
+	comment := markdown.Render(r.Get("body").String(), width, Max(3*depth, 1))
 	fmt.Print(string(comment))
 	// Check if author is op
 	author := r.Get("author").String()
@@ -57,14 +64,14 @@ func print_post(r gjson.Result, op string) {
 	fmt.Println()
 }
 
-func Print_Header(r gjson.Result) {
+func Print_Header(r gjson.Result, width int) {
 	title := r.Get("title")
 	url := r.Get("url")
 	fmt.Printf("\ntitle: %s\nurl: %s\n", title, url)
 
 	selftext := r.Get("selftext").String()
 	if len(strings.TrimSpace(selftext)) > 0 {
-		resp := markdown.Render(selftext, 80, 3)
+		resp := markdown.Render(selftext, width, 3)
 		fmt.Printf("\n%s\n", string(resp))
 	}
 
