@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 
+	"github.com/azimut/redditviewer/human"
 	"github.com/azimut/redditviewer/printer"
 	"github.com/azimut/redditviewer/request"
 	"github.com/fatih/color"
@@ -39,7 +40,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	width = printer.Min(width, max_width)
+	width = human.Min(width, max_width)
 
 	post := gjson.Get(data, "0.data.children.0.data")
 	printer.Print_Header(post, width)

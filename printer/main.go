@@ -25,24 +25,10 @@ func childrens(r gjson.Result, op string, width int) {
 	}
 }
 
-func Min(x, y int) int {
-	if x > y {
-		return y
-	}
-	return x
-}
-
-func Max(x, y int) int {
-	if x > y {
-		return x
-	}
-	return y
-}
-
 func print_post(r gjson.Result, op string, width int) {
 	// Comment
 	depth := int(r.Get("depth").Int())
-	comment := markdown.Render(r.Get("body").String(), width, Max(3*depth, 1))
+	comment := markdown.Render(r.Get("body").String(), width, human.Max(3*depth, 1))
 	fmt.Print(string(comment))
 	// Check if author is op
 	author := r.Get("author").String()

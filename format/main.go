@@ -3,19 +3,12 @@ package format
 import (
 	"strings"
 
+	"github.com/azimut/redditviewer/human"
 	"github.com/bbrks/wrap"
 	"golang.org/x/crypto/ssh/terminal"
 )
 
 const SPACES int = 3
-
-func Max_Int(a, b int) int {
-	if a > b {
-		return a
-	} else {
-		return b
-	}
-}
 
 func Wrap_Line(post string, depth int) (string, error) {
 	width, _, err := terminal.GetSize(0)
@@ -35,9 +28,9 @@ func Wrap_Post(post string, depth int) (string, error) {
 
 func Indent_Post(post string, depth int) string {
 	var post_indented []string
-	indent := strings.Repeat(" ", Max_Int((depth*SPACES)-1, 0))
+	indent := strings.Repeat(" ", human.Max((depth*SPACES)-1, 0))
 	for _, s := range strings.Split(post, "\n") {
-		post_indented = append(post_indented, indent+"｜"+s)
+		post_indented = append(post_indented, indent+">> "+s)
 	}
 	return strings.Join(post_indented, "\n")
 }
