@@ -6,23 +6,24 @@ import (
 
 	"github.com/azimut/redditviewer/format"
 	"github.com/azimut/redditviewer/human"
+	"github.com/fatih/color"
 
 	"github.com/tidwall/gjson"
 )
 
-func Childrens(r gjson.Result) {
-	Print_Post(r)
+func Childrens(r gjson.Result, op string) {
+	Print_Post(r, op)
 	for _, v := range r.Get("replies.data.children.#.data").Array() {
-		Childrens(v)
+		Childrens(v, op)
 	}
 }
-func Print_Posts(r gjson.Result) {
+func Print_Posts(r gjson.Result, op string) {
 	for _, c := range r.Array() {
-		Childrens(c)
+		Childrens(c, op)
 	}
 }
 
-func Print_Post(r gjson.Result) {
+func Print_Post(r gjson.Result, op string) {
 	depth := int(r.Get("depth").Int())
 	unix_human := human.Unix_Time(r.Get("created_utc").Int())
 	resp, _ :=
@@ -30,10 +31,15 @@ func Print_Post(r gjson.Result) {
 			r.Get("body").String(),
 			depth)
 	fmt.Println(resp)
+	author := r.Get("author").String()
+	yellow := color.New(color.FgYellow).SprintFunc()
+	if author == op {
+		author = yellow(author)
+	}
 	resp, _ =
 		format.Format_Post(
 			fmt.Sprintf("%s(%s) - %s\n",
-				r.Get("author").String(),
+				author,
 				r.Get("score").String(),
 				unix_human),
 			depth)

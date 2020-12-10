@@ -12,10 +12,6 @@ func GetFromParam(timeout int, uri string) (string, error) {
 	client := &http.Client{
 		Timeout: time.Duration(timeout) * time.Second}
 
-	if uri == "" {
-		return "", fmt.Errorf("-u parameter not provided")
-	}
-
 	u, err := url.Parse(uri)
 	if err != nil {
 		return "", err
