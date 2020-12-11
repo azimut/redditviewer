@@ -28,7 +28,9 @@ func childrens(r gjson.Result, op string, width int) {
 func print_post(r gjson.Result, op string, width int) {
 	// Comment
 	depth := int(r.Get("depth").Int())
-	comment := markdown.Render(r.Get("body").String(), width, human.Max(3*depth, 1))
+	msg := r.Get("body").String()
+	msg = strings.Replace(msg, "&gt;", ">", -1) // KLUDGE: ">" not handled by markdown
+	comment := markdown.Render(msg, width, human.Max(3*depth, 1))
 	fmt.Print(string(comment))
 	// Check if author is op
 	author := r.Get("author").String()
@@ -56,6 +58,7 @@ func Print_Header(r gjson.Result, width int) {
 	fmt.Printf("\ntitle: %s\nurl: %s\n", title, url)
 
 	selftext := r.Get("selftext").String()
+	selftext = strings.Replace(selftext, "&gt;", ">", -1) // KLUDGE: ">" not handled by markdown
 	if len(strings.TrimSpace(selftext)) > 0 {
 		resp := markdown.Render(selftext, width, 3)
 		fmt.Printf("\n%s\n", string(resp))
@@ -65,7 +68,7 @@ func Print_Header(r gjson.Result, width int) {
 	author := r.Get("author")
 	unix_human := human.Unix_Time(r.Get("created_utc").Int())
 	comments := r.Get("num_comments").Int()
-	fmt.Printf("%s(%d) - %s - %d Comment(s)\n\n",
+	fmt.Printf("%s(%d) - %s - %d Comment(s)\n\n\n",
 		author,
 		upvotes,
 		unix_human,
