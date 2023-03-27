@@ -16,6 +16,9 @@ func GetFromParam(timeout int, uri string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	if u.Host == "old.reddit.com" || u.Host == "reddit.com" {
+		u.Host = "www.reddit.com"
+	}
 	if u.Host != "www.reddit.com" {
 		return "", fmt.Errorf("not supported host")
 	}
