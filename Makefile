@@ -3,7 +3,7 @@ redditviewer: main.go request/main.go printer/main.go human/main.go format/main.
 	ls -lh $@
 
 .PHONY: clean
-clean: ; $(GO) clean -x ./...
+clean: ; go clean -x ./...
 
 .PHONY: install
 install: redditviewer

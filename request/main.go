@@ -10,7 +10,8 @@ import (
 
 func GetFromParam(timeout int, uri string) (string, error) {
 	client := &http.Client{
-		Timeout: time.Duration(timeout) * time.Second}
+		Timeout: time.Duration(timeout) * time.Second,
+	}
 
 	u, err := url.Parse(uri)
 	if err != nil {
