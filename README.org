@@ -1,6 +1,6 @@
 * redditviewer
 
-**ABANDONED** in favor of [cli-view](https://github.com/azimut/cli-view) which would hopefully have a TUI soon...
+*ABANDONED* in favor of [[https://github.com/azimut/cli-view][cli-view]] which would hopefully have a TUI soon...
 
 A simple cli view of some sites. Used mainly with newsboat.
 
